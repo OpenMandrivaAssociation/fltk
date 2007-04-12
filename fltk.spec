@@ -1,0 +1,139 @@
+%define	name		fltk
+%define	lib_name	lib%{name}
+%define	version		1.1.7
+%define	release		%mkrel 7
+%define	real_version	%{version}
+%define	lib_major	1.1
+%define	libname		%mklibname %{name} %lib_major
+
+Summary:	Fast Light Tool Kit (FLTK)
+Name:		fltk
+Version:	%{version}
+Release:	%{release}
+Group:		System/Libraries
+License:	LGPL
+Source:		ftp://ftp.easysw.com/pub/fltk/%{version}/%{name}-%{real_version}-source.tar.bz2
+Patch0:		fltk-1.1.4-lib64.patch
+Patch1:		fltk-1.1.7-cmake-libdir.patch
+URL:		http://www.fltk.org
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildRequires:	X11-devel
+BuildRequires:	alsa-lib-devel
+BuildRequires:	jpeg-devel
+BuildRequires:	png-devel
+BuildRequires:	cmake
+
+%description
+The Fast Light Tool Kit ("FLTK", pronounced "fulltick") is a LGPL'd
+C++ graphical user interface toolkit for X (UNIX(r)), OpenGL(r),
+and Microsoft(r) Windows(r) NT 4.0, 95, or 98. It was originally
+developed by Mr. Bill Spitzak and is currently maintained by a
+small group of developers across the world with a central
+repository in the US.
+
+%package -n	%{libname}
+Summary:	Fast Light Tool Kit (FLTK) - main library
+Group:		System/Libraries
+Obsoletes:	%{name} < %{version}-%{release}
+Provides:	%{name} = %{version}-%{release}
+
+%description -n	%{libname}
+The Fast Light Tool Kit ("FLTK", pronounced "fulltick") is a LGPL'd
+C++ graphical user interface toolkit for X (UNIX(r)), OpenGL(r),
+and Microsoft(r) Windows(r) NT 4.0, 95, or 98. It was originally
+developed by Mr. Bill Spitzak and is currently maintained by a
+small group of developers across the world with a central
+repository in the US.
+
+%package -n	%{libname}-devel
+Summary:	Fast Light Too Kit (FLTK) - development environment
+Group:		Development/C
+Requires:	%{libname} = %{version}
+Obsoletes:	%{name}-devel < %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}, %{lib_name}-devel = %{version}-%{release}
+
+%description -n	%{libname}-devel
+The Fast Light Tool Kit ("FLTK", pronounced "fulltick") is a LGPL'd
+C++ graphical user interface toolkit for X (UNIX(r)), OpenGL(r),
+and Microsoft(r) Windows(r) NT 4.0, 95, or 98. It was originally
+developed by Mr. Bill Spitzak and is currently maintained by a
+small group of developers across the world with a central
+repository in the US.
+
+Install libfltk1-devel if you need to develop FLTK applications.  You'll
+need to install the fltk package if you plan to run dynamically linked
+applications.
+
+%prep
+%setup -q -n %{name}-%{real_version}
+#patch0 -p1 -b .lib64
+%patch1
+
+%build
+CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_OPT_FLAGS" ./configure \
+       --prefix=%{_prefix} --libdir=%{_libdir} --enable-shared --enable-threads
+# need to pass CXX=... here else it is always gcc instead of g++ (fpons)
+%make
+#CXX="g++"
+
+# only run cmake, don't use it to build and install: the result is less conplete than the
+# configure version
+mkdir cmake
+pushd cmake
+cmake -DCMAKE_INSTALL_PREFIX:PATH=%{_prefix} \
+      -DCMAKE_CXX_COMPILER:PATH=%{_bindir}/c++ \
+      -DCMAKE_C_COMPILER:PATH=%{_bindir}/gcc \
+      -DBUILD_SHARED_LIBS:BOOL=ON \
+      -DCMAKE_BUILD_TYPE:STRING=Release \
+      -DFLTK_USE_SYSTEM_JPEG:BOOL=ON \
+      -DFLTK_USE_SYSTEM_PNG:BOOL=ON \
+      -DFLTK_USE_SYSTEM_ZLIB:BOOL=ON \
+      -DUSE_OPENGL:BOOL=ON \
+      -DCMAKE_SKIP_RPATH:BOOL=ON \
+      -DLIB_DIR:STRING=%{_lib} \
+..
+popd
+
+
+%install
+rm -rf $RPM_BUILD_ROOT
+%makeinstall
+mv ${RPM_BUILD_ROOT}%{_datadir}/doc/%{name} \
+	$RPM_BUILD_ROOT%{_datadir}/doc/%{libname}-devel-%{version}
+rm -rf ${RPM_BUILD_ROOT}%{_mandir}/cat*
+
+%multiarch_binaries $RPM_BUILD_ROOT%{_bindir}/fltk-config
+
+# install cmake files by hand - fltk is not configured with cmake
+mkdir -p $RPM_BUILD_ROOT%{_libdir}/FLTK-%{lib_major}
+cp CMake/FLTKUse.cmake $RPM_BUILD_ROOT%{_libdir}/FLTK-%{lib_major}
+cp cmake/FLTKBuildSettings.cmake $RPM_BUILD_ROOT%{_libdir}/FLTK-%{lib_major}
+cp cmake/FLTKLibraryDepends.cmake $RPM_BUILD_ROOT%{_libdir}/FLTK-%{lib_major}
+cp cmake/CMake/FLTKConfig.cmake $RPM_BUILD_ROOT%{_libdir}/FLTK-%{lib_major}
+
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%post -n %{libname} -p /sbin/ldconfig
+
+%postun -n %{libname} -p /sbin/ldconfig
+
+%files -n %{libname}
+%defattr(-,root,root)
+%doc README COPYING CHANGES 
+%{_libdir}/libfltk*.so.*
+
+%files -n %{libname}-devel
+%defattr(-,root,root)
+%docdir %{_datadir}/doc/%{libname}-devel-%{version} 
+%{_datadir}/doc/%{libname}-devel-%{version}
+%{_includedir}/F?
+%{_bindir}/*
+%{_libdir}/libfltk*.so
+%{_libdir}/libfltk*.a
+%dir %{_libdir}/FLTK-%{lib_major}
+%{_libdir}/FLTK-%{lib_major}/*.cmake
+%doc %{_mandir}/man1/* 
+%doc %{_mandir}/man3/* 
+
