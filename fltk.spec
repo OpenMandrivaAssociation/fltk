@@ -1,5 +1,5 @@
-%define ''enable''debug_packages %{nil}
-%define debug_package          %{nil}
+#%define ''enable''debug_packages %{nil}
+#%define debug_package          %{nil}
 
 %define	name		fltk
 %define	lib_name	lib%{name}
