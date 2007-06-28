@@ -133,6 +133,11 @@ cp cmake/FLTKBuildSettings.cmake $RPM_BUILD_ROOT%{_libdir}/FLTK-%{lib_major}
 cp cmake/FLTKLibraryDepends.cmake $RPM_BUILD_ROOT%{_libdir}/FLTK-%{lib_major}
 cp cmake/CMake/FLTKConfig.cmake $RPM_BUILD_ROOT%{_libdir}/FLTK-%{lib_major}
 
+# clean up after hack
+%if "%{_lib}" != "lib"
+rm -f $RPM_BUILD_ROOT/lib
+%endif
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
