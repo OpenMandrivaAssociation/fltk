@@ -22,7 +22,6 @@ Source:		ftp://ftp.easysw.com/pub/fltk/snapshots/%{name}-1.1.x-r%{pre}.tar.bz2
 %else
 Source:		ftp://ftp.easysw.com/pub/fltk/%{version}/%{name}-%{version}-source.tar.bz2
 %endif
-Patch0:		fltk-1.1.8-lib64.patch
 Patch1:		fltk-1.1.7-cmake-libdir.patch
 URL:		http://www.fltk.org
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -80,7 +79,6 @@ linked applications.
 %else
 %setup -q
 %endif
-%patch0 -p1 -b .lib64
 %patch1
 
 %build
@@ -111,6 +109,15 @@ popd
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
+# Makefile hack for 64bitness - from Fedora
+%if "%{_lib}" != "lib"
+mkdir -p $RPM_BUILD_ROOT%{_libdir}
+pushd $RPM_BUILD_ROOT%{_libdir}/..
+ln -s %{_lib} lib
+popd
+%endif
+
 %makeinstall
 mv ${RPM_BUILD_ROOT}%{_datadir}/doc/%{name} \
 	$RPM_BUILD_ROOT%{_datadir}/doc/%{libname}-devel
