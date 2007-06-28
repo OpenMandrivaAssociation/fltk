@@ -1,10 +1,15 @@
 %define	name		fltk
 %define	lib_name	lib%{name}
-%define	version		1.1.7
-%define	release		%mkrel 7
-%define	real_version	%{version}
+%define	version		1.1.8
+%define pre		5917
+%if %pre
+%define	release		%mkrel 0.%pre.1
+%else
+%define release		%mkrel 1
+%endif
 %define	lib_major	1.1
 %define	libname		%mklibname %{name} %lib_major
+%define develname	%mklibname %name -d
 
 Summary:	Fast Light Tool Kit (FLTK)
 Name:		fltk
@@ -12,7 +17,11 @@ Version:	%{version}
 Release:	%{release}
 Group:		System/Libraries
 License:	LGPL
-Source:		ftp://ftp.easysw.com/pub/fltk/%{version}/%{name}-%{real_version}-source.tar.bz2
+%if %pre
+Source:		ftp://ftp.easysw.com/pub/fltk/snapshots/%{name}-1.1.x-r%{pre}.tar.bz2
+%else
+Source:		ftp://ftp.easysw.com/pub/fltk/%{version}/%{name}-%{version}-source.tar.bz2
+%endif
 Patch0:		fltk-1.1.4-lib64.patch
 Patch1:		fltk-1.1.7-cmake-libdir.patch
 URL:		http://www.fltk.org
@@ -45,14 +54,15 @@ developed by Mr. Bill Spitzak and is currently maintained by a
 small group of developers across the world with a central
 repository in the US.
 
-%package -n	%{libname}-devel
-Summary:	Fast Light Too Kit (FLTK) - development environment
+%package -n	%{develname}
+Summary:	Fast Light Tool Kit (FLTK) - development environment
 Group:		Development/C
 Requires:	%{libname} = %{version}
 Obsoletes:	%{name}-devel < %{version}-%{release}
+Obsoletes:	%{_lib}%{name}1.1-devel
 Provides:	%{name}-devel = %{version}-%{release}, %{lib_name}-devel = %{version}-%{release}
 
-%description -n	%{libname}-devel
+%description -n	%{develname}
 The Fast Light Tool Kit ("FLTK", pronounced "fulltick") is a LGPL'd
 C++ graphical user interface toolkit for X (UNIX(r)), OpenGL(r),
 and Microsoft(r) Windows(r) NT 4.0, 95, or 98. It was originally
@@ -61,11 +71,15 @@ small group of developers across the world with a central
 repository in the US.
 
 Install libfltk1-devel if you need to develop FLTK applications.  You'll
-need to install the fltk package if you plan to run dynamically linked
-applications.
+need to install the libfltk1.1 package if you plan to run dynamically 
+linked applications.
 
 %prep
-%setup -q -n %{name}-%{real_version}
+%if %pre
+%setup -q -n %{name}-1.1.x-r%{pre}
+%else
+%setup -q
+%endif
 #patch0 -p1 -b .lib64
 %patch1
 
@@ -99,7 +113,7 @@ popd
 rm -rf $RPM_BUILD_ROOT
 %makeinstall
 mv ${RPM_BUILD_ROOT}%{_datadir}/doc/%{name} \
-	$RPM_BUILD_ROOT%{_datadir}/doc/%{libname}-devel-%{version}
+	$RPM_BUILD_ROOT%{_datadir}/doc/%{libname}-devel
 rm -rf ${RPM_BUILD_ROOT}%{_mandir}/cat*
 
 %multiarch_binaries $RPM_BUILD_ROOT%{_bindir}/fltk-config
@@ -124,10 +138,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc README COPYING CHANGES 
 %{_libdir}/libfltk*.so.*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
-%docdir %{_datadir}/doc/%{libname}-devel-%{version} 
-%{_datadir}/doc/%{libname}-devel-%{version}
+%docdir %{_datadir}/doc/%{libname}-devel
+%{_datadir}/doc/%{libname}-devel
 %{_includedir}/F?
 %{_bindir}/*
 %{_libdir}/libfltk*.so
