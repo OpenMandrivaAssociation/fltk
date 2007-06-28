@@ -1,5 +1,5 @@
 # disable debug packages for now, generation seems broken
-%define ''enable''debug_packages %{nil}
+%define ''enable'' debug_packages %{nil}
 %define debug_package          %{nil}
 
 %define	name		fltk
