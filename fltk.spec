@@ -11,6 +11,7 @@
 %define	libname		%mklibname %{name} %lib_major
 %define develname	%mklibname %name -d
 
+%define debug_package          %{nil}
 
 Summary:	Fast Light Tool Kit (FLTK)
 Name:		fltk
@@ -136,7 +137,7 @@ cp cmake/CMake/FLTKConfig.cmake $RPM_BUILD_ROOT%{_libdir}/FLTK-%{lib_major}
 
 # clean up after hack
 %if "%{_lib}" != "lib"
-rm -f $RPM_BUILD_ROOT/lib
+rm -f $RPM_BUILD_ROOT/%{_libdir}/../lib
 %endif
 
 %clean
