@@ -22,7 +22,7 @@ Source:		ftp://ftp.easysw.com/pub/fltk/snapshots/%{name}-1.1.x-r%{pre}.tar.bz2
 %else
 Source:		ftp://ftp.easysw.com/pub/fltk/%{version}/%{name}-%{version}-source.tar.bz2
 %endif
-Patch0:		fltk-1.1.4-lib64.patch
+Patch0:		fltk-1.1.8-lib64.patch
 Patch1:		fltk-1.1.7-cmake-libdir.patch
 URL:		http://www.fltk.org
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -80,7 +80,7 @@ linked applications.
 %else
 %setup -q
 %endif
-#patch0 -p1 -b .lib64
+%patch0 -p1 -b .lib64
 %patch1
 
 %build
