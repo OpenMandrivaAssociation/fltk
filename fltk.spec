@@ -11,8 +11,6 @@
 %define	libname		%mklibname %{name} %lib_major
 %define develname	%mklibname %name -d
 
-%define ''enable''debug_packages %{nil}
-%define debug_package          %{nil}
 
 Summary:	Fast Light Tool Kit (FLTK)
 Name:		fltk
