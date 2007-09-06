@@ -1,7 +1,7 @@
 %define	name		fltk
 %define	lib_name	lib%{name}
 %define	version		1.1.8
-%define pre		5917
+%define pre		5940
 %if %pre
 %define	release		%mkrel 0.%pre.1
 %else
@@ -18,7 +18,7 @@ Name:		fltk
 Version:	%{version}
 Release:	%{release}
 Group:		System/Libraries
-License:	LGPL
+License:	LGPLv2+
 %if %pre
 Source:		ftp://ftp.easysw.com/pub/fltk/snapshots/%{name}-1.1.x-r%{pre}.tar.bz2
 %else
@@ -149,11 +149,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n %{libname}
 %defattr(-,root,root)
-%doc README COPYING CHANGES 
 %{_libdir}/libfltk*.so.*
 
 %files -n %{develname}
 %defattr(-,root,root)
+%doc README CHANGES
 %docdir %{_datadir}/doc/%{libname}-devel
 %{_datadir}/doc/%{libname}-devel
 %{_includedir}/F?
