@@ -26,6 +26,7 @@ Source:		ftp://ftp.easysw.com/pub/fltk/%{version}/%{name}-%{version}-source.tar.
 %endif
 Patch1:		fltk-1.1.7-cmake-libdir.patch
 URL:		http://www.fltk.org
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	X11-devel
 BuildRequires:	alsa-lib-devel
 BuildRequires:	jpeg-devel
