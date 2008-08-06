@@ -3,9 +3,9 @@
 %define	version		1.1.9
 %define pre		0
 %if %pre
-%define	release		%mkrel 0.%pre.1
+%define	release		%mkrel 2.%pre.1
 %else
-%define release		%mkrel 1
+%define release		%mkrel 2
 %endif
 %define	lib_major	1.1
 %define	libname		%mklibname %{name} %lib_major
