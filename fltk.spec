@@ -58,7 +58,7 @@ Requires: %{libname} = %{version}
 Obsoletes: %{name}-devel < %{version}-%{release}
 Obsoletes: %{_lib}%{name}1.1-devel
 Provides: %{name}-devel = %{version}-%{release}
-Provides : lib%{name} = %{version}-%{release}
+Provides: lib%{name} = %{version}-%{release}
 
 %description -n	%{develname}
 The Fast Light Tool Kit ("FLTK", pronounced "fulltick") is a LGPL'd
