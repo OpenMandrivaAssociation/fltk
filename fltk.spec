@@ -102,7 +102,8 @@ linked applications.
 %cmake \
     -DFLTK_USE_SYSTEM_ZLIB=ON \
     -DFLTK_USE_SYSTEM_JPEG=ON \
-    -DFLTK_USE_SYSTEM_PNG=ON
+    -DFLTK_USE_SYSTEM_PNG=ON \
+    -DBUILD_EXAMPLES=OFF
 %make
 
 %install
