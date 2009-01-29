@@ -1,6 +1,6 @@
 Name: fltk
 Version: 1.1.9
-Release: %mkrel 10
+Release: %mkrel 11
 Group: System/Libraries
 Summary: Fast Light Tool Kit (FLTK)
 License: LGPLv2+
@@ -10,6 +10,7 @@ Patch1: fltk-1.1.9-install-fltk-config.patch
 Patch2: fltk-1.1.9-install-manpage.patch
 Patch3: fltk-1.1.9-set-images-libs.patch
 Patch4: fltk-1.1.9-extra-libs.patch
+Patch5: fltk-1.1.9-fix-fltk-config-libs.patch
 URL: http://www.fltk.org
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: X11-devel
@@ -94,8 +95,10 @@ linked applications.
 %patch2 -p0
 %patch3 -p0
 %patch4 -p0
+%patch5 -p0
 
 %build
+%define Werror_cflags %{nil}
 %cmake \
     -DFLTK_USE_SYSTEM_ZLIB=ON \
     -DFLTK_USE_SYSTEM_JPEG=ON \
