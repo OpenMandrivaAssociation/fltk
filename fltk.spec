@@ -11,6 +11,7 @@ Patch2: fltk-1.1.9-install-manpage.patch
 Patch3: fltk-1.1.9-set-images-libs.patch
 Patch4: fltk-1.1.9-extra-libs.patch
 Patch5: fltk-1.1.9-fix-fltk-config-libs.patch
+Patch6: fltk-1.1.9-gcc-4-4.patch
 URL: http://www.fltk.org
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: X11-devel
@@ -96,6 +97,7 @@ linked applications.
 %patch3 -p0
 %patch4 -p0
 %patch5 -p0
+%patch6 -p0
 
 %build
 %define Werror_cflags %{nil}
