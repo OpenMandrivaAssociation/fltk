@@ -1,6 +1,6 @@
 Name: fltk
-Version: 1.1.9
-Release: %mkrel 14
+Version: 1.1.10
+Release: %mkrel 1
 Group: System/Libraries
 Summary: Fast Light Tool Kit (FLTK)
 License: LGPLv2+
