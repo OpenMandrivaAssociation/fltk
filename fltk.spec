@@ -14,10 +14,10 @@ Patch5: fltk-1.1.9-fix-fltk-config-libs.patch
 Patch6: fltk-1.1.9-gcc-4-4.patch
 URL: http://www.fltk.org
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires: X11-devel
+BuildRequires: libx11-devel
+BuildRequires: mesagl-devel
 BuildRequires: jpeg-devel
 BuildRequires: png-devel
-BuildRequires: zlib-devel
 BuildRequires: man
 BuildRequires: cmake
 
