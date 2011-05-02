@@ -1,6 +1,6 @@
 Name: fltk
 Version: 1.1.10
-Release: %mkrel 5
+Release: %mkrel 6
 Group: System/Libraries
 Summary: Fast Light Tool Kit (FLTK)
 License: LGPLv2+
@@ -82,6 +82,7 @@ linked applications.
 %doc documentation/*.html documentation/*.jpg documentation/*.gif
 %{_includedir}/F?
 %{_bindir}/*
+%{multiarch_bindir}/fltk-config
 %{_mandir}/man?/*
 %{_libdir}/libfltk*.so
 %dir %{_libdir}/FLTK-%{lib_major}
