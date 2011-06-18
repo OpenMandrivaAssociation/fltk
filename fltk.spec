@@ -1,23 +1,21 @@
 Name: fltk
-Version: 1.1.10
-Release: %mkrel 6
+Version: 1.3.0
+Release: %mkrel 1
 Group: System/Libraries
 Summary: Fast Light Tool Kit (FLTK)
 License: LGPLv2+
-Source: ftp://ftp.easysw.com/pub/fltk/%{version}/%{name}-%{version}-source.tar.bz2
-Patch0: fltk-1.1.9-libinstall.patch
-Patch1: fltk-1.1.9-install-fltk-config.patch
-Patch2: fltk-1.1.9-install-manpage.patch
-Patch3: fltk-1.1.9-set-images-libs.patch
-Patch4: fltk-1.1.9-extra-libs.patch
-Patch5: fltk-1.1.9-fix-fltk-config-libs.patch
-Patch6: fltk-1.1.9-gcc-4-4.patch
+Source: ftp://ftp.easysw.com/pub/fltk/%{version}/%{name}-%{version}-source.tar.gz
+Patch0: fltk-1.3.0-link.patch
 URL: http://www.fltk.org
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: libx11-devel
+BuildRequires: libxinerama-devel
 BuildRequires: mesagl-devel
 BuildRequires: jpeg-devel
 BuildRequires: png-devel
+BuildRequires: cairo-devel
+BuildRequires: fontconfig-devel
+BuildRequires: libxft-devel
 BuildRequires: man
 BuildRequires: cmake
 
@@ -31,7 +29,7 @@ repository in the US.
 
 #---------------------------------------------------------------------------
 
-%define lib_major 1.1
+%define lib_major 1.3
 %define libname %mklibname %{name} %lib_major
 
 %package -n %{libname}
@@ -79,12 +77,12 @@ linked applications.
 %files -n %{develname}
 %defattr(-,root,root)
 %doc README CHANGES
-%doc documentation/*.html documentation/*.jpg documentation/*.gif
 %{_includedir}/F?
 %{_bindir}/*
 %{multiarch_bindir}/fltk-config
 %{_mandir}/man?/*
 %{_libdir}/libfltk*.so
+%{_libdir}/libfltk*.a
 %dir %{_libdir}/FLTK-%{lib_major}
 %{_libdir}/FLTK-%{lib_major}/*
 
@@ -93,16 +91,17 @@ linked applications.
 %prep
 %setup -q
 %patch0 -p0
-%patch1 -p0
-%patch2 -p0
-%patch3 -p0
-%patch4 -p0
-%patch5 -p0
-%patch6 -p0
 
 %build
 %define Werror_cflags %{nil}
 %cmake \
+    -DOPTION_BUILD_SHARED_LIBS=ON \
+    -DOPTION_CAIRO=ON \
+    -DOPTION_CAIROEXT=ON \
+    -DOPTION_PREFIX_MAN=%{_mandir} \
+    -DOPTION_PREFIX_LIB=%{_libdir} \
+    -DOPTION_BUILD_EXAMPLES=OFF \
+    -DOPTION_PREFIX_CONFIG=%{_libdir}/FLTK-%{lib_major} \
     -DFLTK_USE_SYSTEM_ZLIB=ON \
     -DFLTK_USE_SYSTEM_JPEG=ON \
     -DFLTK_USE_SYSTEM_PNG=ON \
@@ -115,9 +114,6 @@ rm -rf $RPM_BUILD_ROOT
 %makeinstall_std -C build
 
 %multiarch_binaries $RPM_BUILD_ROOT%{_bindir}/fltk-config
-
-# CMake official test requires that CMakeCache are present
-install -m 644 build/CMakeCache.txt %{buildroot}%{_libdir}/FLTK-%{lib_major}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
