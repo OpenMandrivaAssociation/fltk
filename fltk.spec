@@ -30,7 +30,7 @@ repository in the US.
 #---------------------------------------------------------------------------
 
 %define lib_major 1.3
-%define libname %mklibname %{name} %lib_major
+%define libname %mklibname %{name} 0
 
 %package -n %{libname}
 Summary: Fast Light Tool Kit (FLTK) - main library
@@ -48,7 +48,8 @@ repository in the US.
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/libfltk*.so.*
+%{_libdir}/libfltk*.so.0
+%{_libdir}/libfltk*.so.%{lib_major}
 
 #---------------------------------------------------------------------------
 
