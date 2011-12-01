@@ -110,12 +110,12 @@ linked applications.
 %make
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %makeinstall_std -C build
 
-%multiarch_binaries $RPM_BUILD_ROOT%{_bindir}/fltk-config
+%multiarch_binaries %{buildroot}%{_bindir}/fltk-config
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
