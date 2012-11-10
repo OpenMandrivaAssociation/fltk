@@ -1,0 +1,49 @@
+--- cairo/CMakeLists.txt.link	2011-06-18 14:51:32.000000000 +0200
++++ cairo/CMakeLists.txt	2011-06-18 14:54:07.000000000 +0200
+@@ -8,7 +8,7 @@
+ set(cairo_SRCS Fl_Cairo.cxx)
+ 
+ #######################################################################
+-add_library(fltk_cairo ${cairo_SRCS})
++add_library(fltk_cairo STATIC ${cairo_SRCS})
+ 
+ if(MSVC)
+    set_target_properties(fltk_cairo
+--- src/CMakeLists.txt.link	2011-06-18 14:59:39.000000000 +0200
++++ src/CMakeLists.txt	2011-06-18 15:02:08.000000000 +0200
+@@ -333,6 +333,8 @@
+    set_target_properties(fltk_SHARED PROPERTIES OUTPUT_NAME fltk)
+ endif(MSVC)
+ 
++target_link_libraries(fltk_SHARED dl)
++
+ if(USE_THREADS)
+    target_link_libraries(fltk_SHARED ${CMAKE_THREAD_LIBS_INIT})
+ endif(USE_THREADS)
+@@ -383,6 +385,8 @@
+    set_target_properties(fltk_forms_SHARED PROPERTIES OUTPUT_NAME fltk_forms)
+ endif(MSVC)
+ 
++target_link_libraries(fltk_forms_SHARED dl)
++
+ if(USE_THREADS)
+    target_link_libraries(fltk_SHARED ${CMAKE_THREAD_LIBS_INIT})
+ endif(USE_THREADS)
+@@ -394,7 +398,7 @@
+ #######################################################################
+ add_library(fltk_images_SHARED SHARED ${IMGCPPFILES})
+ target_link_libraries(fltk_images_SHARED fltk
+-   ${FLTK_PNG_LIBRARIES} ${FLTK_JPEG_LIBRARIES} ${FLTK_ZLIB_LIBRARIES}
++   ${FLTK_PNG_LIBRARIES} ${FLTK_JPEG_LIBRARIES} ${FLTK_ZLIB_LIBRARIES} dl
+ )
+ set_target_properties(fltk_images_SHARED
+    PROPERTIES CLEAN_DIRECT_OUTPUT 1
+@@ -424,7 +428,7 @@
+ #######################################################################
+ if(OPENGL_FOUND)
+    add_library(fltk_gl_SHARED SHARED ${GLCPPFILES})
+-   target_link_libraries(fltk_gl_SHARED fltk ${OPENGL_LIBRARIES})
++   target_link_libraries(fltk_gl_SHARED fltk ${OPENGL_LIBRARIES} dl)
+    set_target_properties(fltk_gl_SHARED
+       PROPERTIES CLEAN_DIRECT_OUTPUT 1
+       VERSION ${FLTK_VERSION_MAJOR}.${FLTK_VERSION_MINOR}
