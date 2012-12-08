@@ -1,5 +1,6 @@
---- cairo/CMakeLists.txt.link	2011-06-18 14:51:32.000000000 +0200
-+++ cairo/CMakeLists.txt	2011-06-18 14:54:07.000000000 +0200
+diff -urN fltk-1.3.0/cairo/CMakeLists.txt fltk-1.3.0-patched/cairo/CMakeLists.txt
+--- fltk-1.3.0/cairo/CMakeLists.txt	2010-04-06 09:33:58.000000000 +1100
++++ fltk-1.3.0-patched/cairo/CMakeLists.txt	2012-09-14 01:39:44.173275271 +1100
 @@ -8,7 +8,7 @@
  set(cairo_SRCS Fl_Cairo.cxx)
  
@@ -9,8 +10,21 @@
  
  if(MSVC)
     set_target_properties(fltk_cairo
---- src/CMakeLists.txt.link	2011-06-18 14:59:39.000000000 +0200
-+++ src/CMakeLists.txt	2011-06-18 15:02:08.000000000 +0200
+diff -urN fltk-1.3.0/fluid/CMakeLists.txt fltk-1.3.0-patched/fluid/CMakeLists.txt
+--- fltk-1.3.0/fluid/CMakeLists.txt	2011-01-06 20:24:58.000000000 +1000
++++ fltk-1.3.0-patched/fluid/CMakeLists.txt	2012-09-14 01:40:08.347275014 +1100
+@@ -22,7 +22,7 @@
+ )
+ 
+ add_executable(fluid ${CPPFILES})
+-target_link_libraries(fluid fltk fltk_images fltk_forms)
++target_link_libraries(fluid fltk fltk_images fltk_forms dl)
+ 
+ # link in optional libraries
+ if(FLTK_HAVE_CAIRO)
+diff -urN fltk-1.3.0/src/CMakeLists.txt fltk-1.3.0-patched/src/CMakeLists.txt
+--- fltk-1.3.0/src/CMakeLists.txt	2011-01-12 19:24:03.000000000 +1000
++++ fltk-1.3.0-patched/src/CMakeLists.txt	2012-09-14 01:39:44.173275271 +1100
 @@ -333,6 +333,8 @@
     set_target_properties(fltk_SHARED PROPERTIES OUTPUT_NAME fltk)
  endif(MSVC)

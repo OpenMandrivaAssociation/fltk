@@ -1,6 +1,6 @@
 Name:		fltk
 Version:	1.3.0
-Release:	4
+Release:	6
 Group:		System/Libraries
 Summary:	Fast Light Tool Kit (FLTK)
 License:	LGPLv2+
@@ -60,6 +60,7 @@ Requires:	%{libname} = %{version}
 Obsoletes:	%{name}-devel < %{version}-%{release}
 Obsoletes:	%{_lib}%{name}1.1-devel < 1.3.0
 Provides:	%{name}-devel = %{version}-%{release}
+Requires:	pkgconfig(cairo)
 
 %description -n	%{develname}
 The Fast Light Tool Kit ("FLTK", pronounced "fulltick") is a LGPL'd
@@ -89,7 +90,7 @@ linked applications.
 
 %prep
 %setup -q
-%patch0 -p0
+%patch0 -p1
 
 %build
 %define Werror_cflags %{nil}
