@@ -1,11 +1,11 @@
 Name:		fltk
-Version:	1.3.0
-Release:	6
+Version:	1.3.2
+Release:	1
 Group:		System/Libraries
 Summary:	Fast Light Tool Kit (FLTK)
 License:	LGPLv2+
 URL:		http://www.fltk.org
-Source:		ftp://ftp.easysw.com/pub/fltk/%{version}/%{name}-%{version}-source.tar.gz
+Source0:	ftp://ftp.easysw.com/pub/fltk/%{version}/%{name}-%{version}-source.tar.gz
 Patch0:		fltk-1.3.0-link.patch
 BuildRequires:	pkgconfig(cairo)
 BuildRequires:	pkgconfig(gl)
