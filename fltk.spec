@@ -9,7 +9,7 @@
 Summary:	Fast Light Tool Kit (FLTK)
 Name:		fltk
 Version:	1.3.2
-Release:	5
+Release:	6
 Group:		System/Libraries
 License:	LGPLv2+
 Url:		http://www.fltk.org
