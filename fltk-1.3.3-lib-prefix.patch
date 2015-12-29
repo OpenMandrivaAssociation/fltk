@@ -1,0 +1,24 @@
+--- fltk-1.3.3/CMake/macros.cmake~	2014-10-12 09:24:04.000000000 +0800
++++ fltk-1.3.3/CMake/macros.cmake	2015-08-14 17:15:20.103729445 +0800
+@@ -66,8 +66,8 @@
+     install(TARGETS ${LIBRARY_NAME}
+         EXPORT FLTK-Targets
+         RUNTIME DESTINATION bin
+-        LIBRARY DESTINATION lib
+-        ARCHIVE DESTINATION lib
++	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
++	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+         )
+ 
+     list(APPEND FLTK_LIBRARIES "${LIBRARY_NAME}")
+--- fltk-1.3.3/CMake/setup.cmake~	2014-10-05 08:03:27.000000000 +0800
++++ fltk-1.3.3/CMake/setup.cmake	2015-08-14 17:16:01.644922420 +0800
+@@ -58,7 +58,7 @@
+    set(FLTK_CONFIG_PATH FLTK/.framework/Resources/CMake)
+    set(FLTK_EXAMPLES_PATH share/fltk-examples)
+ else()
+-   set(FLTK_CONFIG_PATH lib/fltk)
++   set(FLTK_CONFIG_PATH ${CMAKE_INSTALL_LIBDIR}/fltk)
+    set(FLTK_EXAMPLES_PATH share/fltk-examples)
+ endif(WIN32 AND NOT CYGWIN)
+ 

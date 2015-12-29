@@ -1,2 +1,3 @@
 sources:
-  "fltk-1.3.2-source.tar.gz:" 25071d6bb81cc136a449825bfd574094b48f07fb
+  fltk-1.3.2-source.tar.gz: 25071d6bb81cc136a449825bfd574094b48f07fb
+  fltk-1.3.3-source.tar.gz: 873aac49b277149e054b9740378e2ca87b0bd435

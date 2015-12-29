@@ -1,13 +1,17 @@
+%define _disable_lto 1
+%define _disable_ld_no_undefined 1
+
 Name:		fltk
-Version:	1.3.2
-Release:	8
+Version:	1.3.3
+Release:	1
 Group:		System/Libraries
 Summary:	Fast Light Tool Kit (FLTK)
 License:	LGPLv2+
 URL:		http://www.fltk.org
 Source0:	http://fltk.org/pub/fltk/%{version}/fltk-%{version}-source.tar.gz
-Patch0:		fltk-1.3.0-link.patch
-Patch1:		fltk-1.3.2-clang.patch
+Patch1:		fltk-1.3.3-install-fltk-config.patch
+Patch2:		fltk-1.3.3-lib-prefix.patch
+Patch3:		fltk-1.3.3-man-install-dir.patch
 BuildRequires:	pkgconfig(cairo)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(fontconfig)
@@ -18,6 +22,7 @@ BuildRequires:	pkgconfig(xinerama)
 BuildRequires:	jpeg-devel
 BuildRequires:	cmake
 BuildRequires:	man
+BuildConflicts: fltk-devel
 
 %description
 The Fast Light Tool Kit ("FLTK", pronounced "fulltick") is a LGPL'd
@@ -30,7 +35,7 @@ repository in the US.
 #---------------------------------------------------------------------------
 
 %define lib_major 1.3
-%define libname %mklibname %{name} 0
+%define libname %mklibname %{name} %{lib_major}
 
 %package -n %{libname}
 Summary:	Fast Light Tool Kit (FLTK) - main library
@@ -47,8 +52,7 @@ small group of developers across the world with a central
 repository in the US.
 
 %files -n %{libname}
-%{_libdir}/libfltk*.so.0
-%{_libdir}/libfltk*.so.%{lib_major}
+%{_libdir}/libfltk*.so.%{lib_major}*
 
 #---------------------------------------------------------------------------
 
@@ -83,26 +87,24 @@ linked applications.
 %{_mandir}/man?/*
 %{_libdir}/libfltk*.so
 %{_libdir}/libfltk*.a
-%dir %{_libdir}/FLTK-%{lib_major}
-%{_libdir}/FLTK-%{lib_major}/*
+%dir %{_libdir}/fltk
+%{_libdir}/fltk/*
 
 #---------------------------------------------------------------------------
 
 %prep
 %setup -q
-%patch0 -p0
-%patch1 -p1 -b .clang~
+%apply_patches
 
 %build
+export CC=gcc
+export CXX=g++
 %define Werror_cflags %{nil}
 %cmake \
     -DOPTION_BUILD_SHARED_LIBS=ON \
-    -DOPTION_CAIRO=ON \
-    -DOPTION_CAIROEXT=ON \
     -DOPTION_PREFIX_MAN=%{_mandir} \
     -DOPTION_PREFIX_LIB=%{_libdir} \
     -DOPTION_BUILD_EXAMPLES=OFF \
-    -DOPTION_PREFIX_CONFIG=%{_libdir}/FLTK-%{lib_major} \
     -DFLTK_USE_SYSTEM_ZLIB=ON \
     -DFLTK_USE_SYSTEM_JPEG=ON \
     -DFLTK_USE_SYSTEM_PNG=ON \
