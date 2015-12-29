@@ -12,6 +12,7 @@ Source0:	http://fltk.org/pub/fltk/%{version}/fltk-%{version}-source.tar.gz
 Patch1:		fltk-1.3.3-install-fltk-config.patch
 Patch2:		fltk-1.3.3-lib-prefix.patch
 Patch3:		fltk-1.3.3-man-install-dir.patch
+Patch4:		fltk-1.3.3-link.patch
 BuildRequires:	pkgconfig(cairo)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(fontconfig)
