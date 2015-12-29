@@ -3,7 +3,7 @@
 
 Name:		fltk
 Version:	1.3.3
-Release:	2
+Release:	3
 Group:		System/Libraries
 Summary:	Fast Light Tool Kit (FLTK)
 License:	LGPLv2+
@@ -115,6 +115,8 @@ make
 
 %install
 %makeinstall_std -C build
+
+install build/CMakeCache.txt %{buildroot}/%{_libdir}/fltk/
 
 %multiarch_binaries %{buildroot}%{_bindir}/fltk-config
 
