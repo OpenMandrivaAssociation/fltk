@@ -3,7 +3,7 @@
 
 Name:		fltk
 Version:	1.3.3
-Release:	3
+Release:	4
 Group:		System/Libraries
 Summary:	Fast Light Tool Kit (FLTK)
 License:	LGPLv2+
@@ -106,6 +106,8 @@ export CXX=g++
     -DOPTION_BUILD_SHARED_LIBS=ON \
     -DOPTION_PREFIX_MAN=%{_mandir} \
     -DOPTION_PREFIX_LIB=%{_libdir} \
+    -DCMAKE_INSTALL_LIBDIR:PATH=%{_libdir} \
+    -DLIB_INSTALL_DIR:PATH=%{_libdir} \
     -DOPTION_BUILD_EXAMPLES=OFF \
     -DFLTK_USE_SYSTEM_ZLIB=ON \
     -DFLTK_USE_SYSTEM_JPEG=ON \
