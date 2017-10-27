@@ -1,0 +1,16 @@
+--- a/CMake/install.cmake
++++ b/CMake/install.cmake
+@@ -113,8 +113,10 @@
+    INSTALL_MAN(fluid 1)
+    INSTALL_MAN(fltk-config 1)
+    INSTALL_MAN(fltk 3)
+-   INSTALL_MAN(blocks 6)
+-   INSTALL_MAN(checkers 6)
+-   INSTALL_MAN(sudoku 6)
++   if(OPTION_BUILD_EXAMPLES)
++      INSTALL_MAN(blocks 6)
++      INSTALL_MAN(checkers 6)
++      INSTALL_MAN(sudoku 6)
++   endif(OPTION_BUILD_EXAMPLES)
+ 
+ endif(UNIX OR MSYS OR (MINGW AND CMAKE_CROSSCOMPILING))
