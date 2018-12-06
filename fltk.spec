@@ -149,6 +149,8 @@ linked applications.
 rm -fr png jpeg zlib
 
 %build
+export CFLAGS="%{optflags} -fPIC"
+export CXXFLAGS="%{optflags} -fPIC"
 %cmake \
 	-DOPTION_BUILD_SHARED_LIBS:BOOL=ON \
 	-DOPTION_BUILD_EXAMPLES=OFF \
