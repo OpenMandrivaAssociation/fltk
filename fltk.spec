@@ -143,7 +143,7 @@ linked applications.
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 
 # remobe bundled libraries
 rm -fr png jpeg zlib
