@@ -2,7 +2,7 @@
 
 %define major	1
 %define minor	3
-%define micro	4
+%define micro	5
 
 %define libname %mklibname %{name} %{major}.%{minor}
 %define devname	%mklibname %{name} -d
