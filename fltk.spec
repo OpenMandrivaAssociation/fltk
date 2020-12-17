@@ -2,7 +2,7 @@
 
 %define major	1
 %define minor	3
-%define micro	4
+%define micro	5
 
 %define libname %mklibname %{name} %{major}.%{minor}
 %define devname	%mklibname %{name} -d
@@ -22,7 +22,6 @@ Summary:	Fast Light Tool Kit (FLTK)
 License:	LGPLv2+
 URL:		http://www.fltk.org
 Source0:	http://fltk.org/pub/fltk/%{version}/fltk-%{version}-source.tar.gz
-Patch0:		%{name}-1.3.4-fix-cairo.patch
 Patch1:		%{name}-1.3.4-fix-cmake-shared-libraries-suffix.patch
 Patch2:		%{name}-1.3.4-fix-cmake-install-cmake-path.patch
 Patch3:		%{name}-1.3.4-fix-cmake-install-example.patch
@@ -164,10 +163,10 @@ export CXXFLAGS="%{optflags} -fPIC"
 	-DOPTION_USE_SYSTEM_LIBPNG:BOOL=ON \
 	-DOPTION_USE_SYSTEM_ZLIB:BOOL=ON \
 	%{nil}
-%make
+%make_build
 
 %install
-%makeinstall_std -C build
+%make_install -C build
 
 # remove spurious includes
 find %{buildroot}%{_includedir} -type f -not -iname \*h -delete
