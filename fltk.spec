@@ -22,7 +22,7 @@ Summary:	Fast Light Tool Kit (FLTK)
 License:	LGPLv2+
 URL:		http://www.fltk.org
 Source0:	http://fltk.org/pub/fltk/%{version}/fltk-%{version}-source.tar.gz
-Patch0:		%{name}-1.3.4-fix-cairo.patch
+#Patch0:		%{name}-1.3.4-fix-cairo.patch
 Patch1:		%{name}-1.3.4-fix-cmake-shared-libraries-suffix.patch
 Patch2:		%{name}-1.3.4-fix-cmake-install-cmake-path.patch
 Patch3:		%{name}-1.3.4-fix-cmake-install-example.patch
