@@ -24,6 +24,7 @@ URL:		http://www.fltk.org
 Source0:	http://fltk.org/pub/fltk/%{version}/fltk-%{version}-source.tar.gz
 
 BuildRequires:	cmake
+BuildRequires:	ninja
 BuildRequires:	doxygen
 BuildRequires:	desktop-file-utils
 BuildRequires:	pkgconfig(cairo)
@@ -139,32 +140,42 @@ linked applications.
 #---------------------------------------------------------------------------
 
 %prep
-%setup -q
-%autopatch -p1
+%autosetup -p1
 
-# remobe bundled libraries
+# remove bundled libraries
 rm -fr png jpeg zlib
 
 %build
 export CFLAGS="%{optflags} -fPIC"
 export CXXFLAGS="%{optflags} -fPIC"
 %cmake \
+	-DFLTK_BUILD_TEST:BOOL=ON \
+	-DFLTK_BUILD_EXAMPLES:BOOL=ON \
 	-DOPTION_BUILD_SHARED_LIBS:BOOL=ON \
-	-DOPTION_BUILD_EXAMPLES=OFF \
 %if %{with cairo}
 	-DOPTION_CAIRO:BOOL=ON \
 %if %{with cairoext}
 	-DOPTION_CAIROEXT:BOOL=ON \
 %endif
 %endif
+	-DOPTION_USE_GL:BOOL=ON \
+	-DOPTION_USE_SVG:BOOL=ON \
+	-DOPTION_USE_THREADS:BOOL=ON \
+	-DOPTION_USE_XCURSOR:BOOL=ON \
+	-DOPTION_USE_XDBE:BOOL=ON \
+	-DOPTION_USE_XFIXES:BOOL=ON \
+	-DOPTION_USE_XFT:BOOL=ON \
+	-DOPTION_USE_XINERAMA:BOOL=ON \
+	-DOPTION_USE_XRENDER:BOOL=ON \
 	-DOPTION_USE_SYSTEM_LIBJPEG:BOOL=ON \
 	-DOPTION_USE_SYSTEM_LIBPNG:BOOL=ON \
 	-DOPTION_USE_SYSTEM_ZLIB:BOOL=ON \
+	-G Ninja \
 	%{nil}
-%make_build
+%ninja_build
 
 %install
-%make_install -C build
+%ninja_install -C build
 
 # remove spurious includes
 find %{buildroot}%{_includedir} -type f -not -iname \*h -delete
