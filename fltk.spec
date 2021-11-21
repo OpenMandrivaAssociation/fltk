@@ -2,7 +2,7 @@
 
 %define major	1
 %define minor	3
-%define micro	5
+%define micro	8
 
 %define libname %mklibname %{name} %{major}.%{minor}
 %define devname	%mklibname %{name} -d
@@ -22,9 +22,6 @@ Summary:	Fast Light Tool Kit (FLTK)
 License:	LGPLv2+
 URL:		http://www.fltk.org
 Source0:	http://fltk.org/pub/fltk/%{version}/fltk-%{version}-source.tar.gz
-Patch1:		%{name}-1.3.4-fix-cmake-shared-libraries-suffix.patch
-Patch2:		%{name}-1.3.4-fix-cmake-install-cmake-path.patch
-Patch3:		%{name}-1.3.4-fix-cmake-install-example.patch
 
 BuildRequires:	cmake
 BuildRequires:	doxygen
@@ -134,6 +131,7 @@ linked applications.
 %endif
 %{_mandir}/man1/fltk-config.1*
 %{_mandir}/man3/fltk.3*
+%{_mandir}/man6/*.6*
 %dir %{_datadir}/%{name}/
 %{_datadir}/%{name}/*
 %doc COPYING
@@ -178,4 +176,3 @@ find %{buildroot}%{_libdir} -type f -name \*a -delete
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/fluid.desktop
-
