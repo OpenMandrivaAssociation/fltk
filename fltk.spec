@@ -34,6 +34,7 @@ BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xft)
 BuildRequires:	pkgconfig(xinerama)
+BuildRequires:  pkgconfig(xcursor)
 BuildRequires:	jpeg-devel
 BuildRequires:	man
 
