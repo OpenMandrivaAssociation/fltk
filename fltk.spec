@@ -16,7 +16,7 @@
 
 Name:		fltk
 Version:	%{major}.%{minor}.%{micro}
-Release:	1
+Release:	2
 Group:		System/Libraries
 Summary:	Fast Light Tool Kit (FLTK)
 License:	LGPLv2+
@@ -101,6 +101,12 @@ Summary:	Fast Light Tool Kit (FLTK) - development environment
 Group:		Development/C
 Provides:	%{name}-devel = %{version}-%{release}
 Requires:	%{libname} = %{version}
+Requires:	pkgconfig(xext)
+Requires:	pkgconfig(xinerama)
+Requires:	pkgconfig(xfixes)
+Requires:	pkgconfig(xcursor)
+Requires:	pkgconfig(xft)
+Requires:	pkgconfig(xrender)
 
 %description -n	%{devname}
 The Fast Light Tool Kit ("FLTK", pronounced "fulltick") is a LGPL'd
