@@ -2,7 +2,7 @@
 
 %define major	1
 %define minor	3
-%define micro	8
+%define micro	9
 
 %define libname %mklibname %{name} %{major}.%{minor}
 %define devname	%mklibname %{name} -d
@@ -152,10 +152,9 @@ linked applications.
 # remove bundled libraries
 rm -fr png jpeg zlib
 
-%build
 export CFLAGS="%{optflags} -fPIC"
 export CXXFLAGS="%{optflags} -fPIC"
-%cmake \
+%cmake -G Ninja \
 	-DFLTK_BUILD_TEST:BOOL=ON \
 	-DFLTK_BUILD_EXAMPLES:BOOL=ON \
 	-DOPTION_BUILD_SHARED_LIBS:BOOL=ON \
@@ -177,9 +176,11 @@ export CXXFLAGS="%{optflags} -fPIC"
 	-DOPTION_USE_SYSTEM_LIBJPEG:BOOL=ON \
 	-DOPTION_USE_SYSTEM_LIBPNG:BOOL=ON \
 	-DOPTION_USE_SYSTEM_ZLIB:BOOL=ON \
-	-G Ninja \
 	%{nil}
-%ninja_build
+
+%build
+
+%ninja_build -C build
 
 %install
 %ninja_install -C build
