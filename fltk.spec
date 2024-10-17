@@ -20,7 +20,7 @@ Release:	3
 Group:		System/Libraries
 Summary:	Fast Light Tool Kit (FLTK)
 License:	LGPLv2+
-URL:		http://www.fltk.org
+URL:		https://www.fltk.org
 Source0:	http://fltk.org/pub/fltk/%{version}/fltk-%{version}-source.tar.gz
 
 BuildRequires:	cmake
