@@ -1,10 +1,11 @@
 %define _disable_ld_no_undefined 1
 
-%define major	1
-%define minor	3
-%define micro	9
+%define major	%(echo %{version} |cut -d. -f1)
+%define minor	%(echo %{version} |cut -d. -f2)
+%define micro	%(echo %{version} |cut -d. -f3)
 
-%define libname %mklibname %{name} %{major}.%{minor}
+%define oldlibname %mklibname %{name} 1.3
+%define libname %mklibname %{name}
 %define devname	%mklibname %{name} -d
 
 # enable/disable cairo support
@@ -15,13 +16,13 @@
 %bcond_without	static_lib
 
 Name:		fltk
-Version:	%{major}.%{minor}.%{micro}
-Release:	3
+Version:	1.3.9
+Release:	1
 Group:		System/Libraries
 Summary:	Fast Light Tool Kit (FLTK)
 License:	LGPLv2+
 URL:		https://www.fltk.org
-Source0:	http://fltk.org/pub/fltk/%{version}/fltk-%{version}-source.tar.gz
+Source0:	https://fltk.org/pub/fltk/%{version}/fltk-%{version}-source.tar.gz
 
 BuildRequires:	cmake
 BuildRequires:	ninja
@@ -77,6 +78,7 @@ or included as part of a larger project.-interface.
 Summary:	Fast Light Tool Kit (FLTK) - main library
 Group:		System/Libraries
 Provides:	%{name} = %{version}-%{release}
+%rename %{oldlibname}
 
 %description -n	%{libname}
 The Fast Light Tool Kit ("FLTK", pronounced "fulltick") is a LGPL'd
