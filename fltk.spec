@@ -17,7 +17,7 @@
 
 Name:		fltk
 Version:	1.4.0
-Release:	2
+Release:	3
 Group:		System/Libraries
 Summary:	Fast Light Tool Kit (FLTK)
 License:	LGPLv2+
@@ -114,6 +114,16 @@ Requires:	pkgconfig(xfixes)
 Requires:	pkgconfig(xcursor)
 Requires:	pkgconfig(xft)
 Requires:	pkgconfig(xrender)
+Requires:	pkgconfig(cairo)
+Requires:	pkgconfig(pango)
+Requires:	pkgconfig(pangocairo)
+Requires:	pkgconfig(pangoxft)
+Requires:	pkgconfig(gl)
+Requires:	pkgconfig(glu)
+Requires:	pkgconfig(fontconfig)
+Requires:	pkgconfig(libpng)
+Requires:	pkgconfig(x11)
+Requires:	pkgconfig(libdecor-0)
 
 %description -n	%{devname}
 The Fast Light Tool Kit ("FLTK", pronounced "fulltick") is a LGPL'd
