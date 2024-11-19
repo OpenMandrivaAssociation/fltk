@@ -16,7 +16,7 @@
 %bcond_without	static_lib
 
 Name:		fltk
-Version:	1.3.9
+Version:	1.4.0
 Release:	1
 Group:		System/Libraries
 Summary:	Fast Light Tool Kit (FLTK)
@@ -29,6 +29,9 @@ BuildRequires:	ninja
 BuildRequires:	doxygen
 BuildRequires:	desktop-file-utils
 BuildRequires:	pkgconfig(cairo)
+BuildRequires:	pkgconfig(pango)
+BuildRequires:	pkgconfig(pangocairo)
+BuildRequires:	pkgconfig(pangoxft)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(fontconfig)
 BuildRequires:	pkgconfig(libpng)
@@ -36,6 +39,7 @@ BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xft)
 BuildRequires:	pkgconfig(xinerama)
 BuildRequires:  pkgconfig(xcursor)
+BuildRequires:  pkgconfig(libdecor-0)
 BuildRequires:	jpeg-devel
 BuildRequires:	man
 
@@ -123,10 +127,14 @@ need to install the libfltk1.1 package if you plan to run dynamically
 linked applications.
 
 %files -n %{devname}
-%doc ANNOUNCEMENT CHANGES CREDITS KNOWN_BUGS.html README
+%doc ANNOUNCEMENT
 %dir %{_includedir}/FL
 %{_includedir}/FL/*
 %{_bindir}/fltk-config
+%{_bindir}/fltk-options
+%{_datadir}/applications/fltk-options.desktop
+%{_datadir}/icons/hicolor/*/apps/fltk-options.*
+%{_datadir}/mime/packages/fltk-options.xml
 %{_libdir}/libfltk.so
 %{_libdir}/libfltk_cairo.so
 %{_libdir}/libfltk_forms.so
@@ -140,8 +148,8 @@ linked applications.
 %{_libdir}/libfltk_images.a
 %endif
 %{_mandir}/man1/fltk-config.1*
+%{_mandir}/man1/fltk-options.1*
 %{_mandir}/man3/fltk.3*
-%{_mandir}/man6/*.6*
 %dir %{_datadir}/%{name}/
 %{_datadir}/%{name}/*
 %doc COPYING
@@ -154,30 +162,36 @@ linked applications.
 # remove bundled libraries
 rm -fr png jpeg zlib
 
+# Fix check for a define that isn't set anywhere
+sed -i -e 's,FLTK_USE_STDXX,FLTK_USE_STD,' src/Fl_Table.cxx
+
 export CFLAGS="%{optflags} -fPIC"
 export CXXFLAGS="%{optflags} -fPIC"
 %cmake -G Ninja \
 	-DFLTK_BUILD_TEST:BOOL=ON \
 	-DFLTK_BUILD_EXAMPLES:BOOL=ON \
-	-DOPTION_BUILD_SHARED_LIBS:BOOL=ON \
+	-DFLTK_BUILD_SHARED_LIBS:BOOL=ON \
 %if %{with cairo}
-	-DOPTION_CAIRO:BOOL=ON \
+	-DFLTK_OPTION_CAIRO_WINDOW:BOOL=ON \
 %if %{with cairoext}
-	-DOPTION_CAIROEXT:BOOL=ON \
+	-DFLTK_OPTION_CAIRO_EXT:BOOL=ON \
 %endif
 %endif
-	-DOPTION_USE_GL:BOOL=ON \
-	-DOPTION_USE_SVG:BOOL=ON \
-	-DOPTION_USE_THREADS:BOOL=ON \
-	-DOPTION_USE_XCURSOR:BOOL=ON \
-	-DOPTION_USE_XDBE:BOOL=ON \
-	-DOPTION_USE_XFIXES:BOOL=ON \
-	-DOPTION_USE_XFT:BOOL=ON \
-	-DOPTION_USE_XINERAMA:BOOL=ON \
-	-DOPTION_USE_XRENDER:BOOL=ON \
-	-DOPTION_USE_SYSTEM_LIBJPEG:BOOL=ON \
-	-DOPTION_USE_SYSTEM_LIBPNG:BOOL=ON \
-	-DOPTION_USE_SYSTEM_ZLIB:BOOL=ON \
+	-DFLTK_OPTION_STD:BOOL=ON \
+	-DFLTK_USE_LIBDECOR_GTK:BOOL=OFF \
+	-DFLTK_USE_GL:BOOL=ON \
+	-DFLTK_USE_SVG:BOOL=ON \
+	-DFLTK_USE_THREADS:BOOL=ON \
+	-DFLTK_USE_XCURSOR:BOOL=ON \
+	-DFLTK_USE_XDBE:BOOL=ON \
+	-DFLTK_USE_XFIXES:BOOL=ON \
+	-DFLTK_USE_XFT:BOOL=ON \
+	-DFLTK_USE_XINERAMA:BOOL=ON \
+	-DFLTK_USE_XRENDER:BOOL=ON \
+	-DFLTK_USE_SYSTEM_LIBJPEG:BOOL=ON \
+	-DFLTK_USE_SYSTEM_LIBPNG:BOOL=ON \
+	-DFLTK_USE_SYSTEM_ZLIB:BOOL=ON \
+	-DFLTK_USE_SYSTEM_LIBDECOR:BOOL=ON \
 	%{nil}
 
 %build
