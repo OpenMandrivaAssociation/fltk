@@ -16,8 +16,8 @@
 %bcond_without	static_lib
 
 Name:		fltk
-Version:	1.4.0
-Release:	3
+Version:	1.4.1
+Release:	1
 Group:		System/Libraries
 Summary:	Fast Light Tool Kit (FLTK)
 License:	LGPLv2+
