@@ -16,13 +16,13 @@
 %bcond_without	static_lib
 
 Name:		fltk
-Version:	1.4.1
+Version:	1.4.3
 Release:	1
 Group:		System/Libraries
 Summary:	Fast Light Tool Kit (FLTK)
 License:	LGPLv2+
 URL:		https://www.fltk.org
-Source0:	https://fltk.org/pub/fltk/%{version}/fltk-%{version}-source.tar.gz
+Source0:	https://github.com/fltk/fltk/releases/download/release-%{version}/fltk-%{version}-source.tar.bz2
 
 BuildRequires:	cmake
 BuildRequires:	ninja
@@ -166,6 +166,24 @@ linked applications.
 %doc COPYING
 
 #---------------------------------------------------------------------------
+%package examples
+Summary:	Example applications for the FLTK toolkit
+Group:		Development/Tools
+
+%description examples
+Example applications for the FLTK toolkit
+
+%files examples
+%{_bindir}/blocks
+%{_bindir}/checkers
+%{_bindir}/glpuzzle
+%{_bindir}/sudoku
+%{_mandir}/man6/blocks.6*
+%{_mandir}/man6/checkers.6*
+%{_mandir}/man6/glpuzzle.6*
+%{_mandir}/man6/sudoku.6*
+
+#---------------------------------------------------------------------------
 
 %prep
 %autosetup -p1
@@ -219,6 +237,10 @@ find %{buildroot}%{_includedir} -type f -not -iname \*h -delete
 # remove static lib
 find %{buildroot}%{_libdir} -type f -name \*a -delete
 %endif
+
+# No need for the statically linked binaries
+mv -f %{buildroot}%{_bindir}/fluid-shared %{buildroot}%{_bindir}/fluid
+mv -f %{buildroot}%{_bindir}/fltk-options-shared %{buildroot}%{_bindir}/fltk-options
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/fluid.desktop
