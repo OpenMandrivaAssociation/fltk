@@ -1,0 +1,12 @@
+diff -rupN fltk-1.4.4.old/FL/Fl_Cairo.H fltk-1.4.4/FL/Fl_Cairo.H
+--- fltk-1.4.4.old/FL/Fl_Cairo.H	2025-07-19 18:45:10.000000000 +0200
++++ fltk-1.4.4/FL/Fl_Cairo.H	2025-08-07 09:17:07.331871646 +0200
+@@ -37,7 +37,7 @@
+ 
+ # ifdef FLTK_HAVE_CAIRO
+ 
+-# include <cairo.h>
++# include <cairo/cairo.h>
+ 
+ /**
+   \addtogroup group_cairo
