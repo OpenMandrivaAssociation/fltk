@@ -17,11 +17,12 @@
 Summary:	Fast Light Tool Kit (FLTK)
 Name:	fltk
 Version:	1.4.4
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:	System/Libraries
 Url:		https://www.fltk.org
 Source0:	https://github.com/fltk/fltk/releases/download/release-%{version}/%{name}-%{version}-source.tar.bz2
+Patch0:	fltk-1.4.4-fix-cairo-header-inclusion.patch
 BuildRequires:	cmake >= 3.15
 BuildRequires:	desktop-file-utils
 BuildRequires:	doxygen
