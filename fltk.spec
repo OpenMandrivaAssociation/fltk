@@ -15,9 +15,9 @@
 %bcond_without	static_lib
 
 Summary:	Fast Light Tool Kit (FLTK)
-Name:	fltk
-Version:	1.4.4
-Release:	2
+Name:		fltk
+Version:	1.4.5
+Release:	1
 License:	LGPLv2+
 Group:	System/Libraries
 Url:		https://www.fltk.org
